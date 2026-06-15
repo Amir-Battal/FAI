@@ -1,0 +1,213 @@
+@import "tailwindcss";
+
+*{
+  /* padding: 0;
+  margin: 0; */
+  /* box-sizing: border-box; */
+  /* font-family: Dahlia; */
+  direction: rtl;
+}
+
+@font-face {
+  font-family: Dahlia; /* set name */
+  src: url(./assets/Font/Dahlia-BoldCondensed.otf); /* url of the font */
+}
+@font-face {
+  font-family: Naskh; /* set name */
+  src: url(./assets/Font/Naskh.ttf); /* url of the font */
+}
+
+body,html{
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.webgl{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* nav{
+  color: white;
+  z-index: 2;
+  position: relative;
+  padding: 4rem 8rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav a{
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+nav ul{
+  list-style: none;
+  display: flex;
+  gap: 4rem;
+} */
+
+.title{
+
+  margin-top: 150px;
+  color: blue;
+  z-index: 2;
+  position: absolute;
+  font-size: 3rem;
+  left: 50%;
+  top: 75%;
+  transform: translate(-50%, -75%);
+
+
+  background-color: white;
+
+  padding-right: 30px;
+  padding-left: 30px;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  border: 2px solid blue;
+
+  border-radius: 10px;
+}
+
+.title:hover{
+  background-color: rgb(168, 168, 223);
+  cursor: pointer;
+}
+
+.logoTitle{
+  font-size: 50px;
+}
+
+
+
+
+.product-overlay {
+  background: linear-gradient(135deg, rgba(223, 222, 222, 0.95), rgba(179, 179, 179, 0.9));
+  pointer-events: all;
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+  animation: slideInPanel 0.5s ease forwards;
+  z-index: 100;
+}
+
+@keyframes slideInPanel {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutPanel {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.product-overlay.closing {
+  animation: slideOutPanel 0.4s ease forwards;
+}
+
+
+/* .product-card h2 {
+  margin-bottom: 15px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #f5e6d3;
+} */
+
+/* .product-card p {
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+} */
+
+/* .product-card .price {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #d4af37;
+  margin-bottom: 30px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+} */
+
+/* .product-card .add-to-cart {
+  width: 100%;
+  padding: 15px 30px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #d4af37, #b8962e);
+  color: #1a1a1a;
+  font-size: 1.1rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+} */
+
+/* .product-card .add-to-cart:hover {
+  background: linear-gradient(135deg, #e5c04a, #d4af37);
+  transform: scale(1.02);
+} */
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  left: -40px;
+  width: 40px;
+  height: 40px;
+  /* border-radius: 50%; */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, rgba(223, 222, 222, 0.95), rgba(179, 179, 179, 0.9));
+  color: black;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 99;
+}
+.close-btn-left {
+  position: absolute;
+  top: 20px;
+  right: -40px;
+  width: 40px;
+  height: 40px;
+  /* border-radius: 50%; */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, rgba(223, 222, 222, 0.95), rgba(179, 179, 179, 0.9));
+  color: black;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 99;
+}
+
+.close-btn:hover {
+  background: linear-gradient(135deg, rgba(192, 192, 192, 0.95), rgba(148, 148, 148, 0.9));
+  transform: rotate(90deg);
+}
+.close-btn-left:hover {
+  background: linear-gradient(135deg, rgba(192, 192, 192, 0.95), rgba(148, 148, 148, 0.9));
+  transform: rotate(90deg);
+}
