@@ -69,6 +69,7 @@ export function loadModel({
     model.position.set(...position);
     model.rotation.set(...rotation);
     model.scale.set(...scale);
+    console.log("loaded", name);
 
     if (parent) {
       parent.add(model);

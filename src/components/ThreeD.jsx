@@ -11,7 +11,9 @@ import {
   sunLight,
   fillLight,
   mouseLight,
-  rimLight
+  rimLight,
+  frontLight,
+  frontFillLight,
 } from "../three/lights";
 
 import {
@@ -61,6 +63,16 @@ export default function ThreeD() {
 
   const floorRef = useRef(null);
 
+  const dragState = useRef({
+    active: false,
+    lastX: 0,
+    lastY: 0,
+  });
+  const rotationTarget = useRef({
+    y: 0,
+  });
+  const productModels = useRef({});
+
   // Initialize renderer when component mounts
   useEffect(() => {
     const renderer = getRenderer();
@@ -80,6 +92,65 @@ export default function ThreeD() {
     });
   };
 
+  const resetAllProducts = () => {
+    [product1, product2, product3].forEach((group) => {
+      const orig = original.current.get(group);
+
+      gsap.to(group.position, {
+        x: orig.x,
+        y: orig.y,
+        z: orig.z,
+        duration: 1,
+        ease: "power3.out",
+      });
+
+      gsap.to(group.rotation, {
+        x: 0,
+        y: 0,
+        z: 0,
+        duration: 1,
+        ease: "power3.out",
+      });
+    });
+
+    rotationTarget.current.y = 0;
+  };
+
+  const onPointerDown = (e) => {
+    if (!focusedRef.current) return;
+
+    dragState.current.active = true;
+    dragState.current.lastX = e.clientX;
+    dragState.current.lastY = e.clientY;
+  };
+
+
+  const onPointerMove = (e) => {
+    if (!dragState.current.active) return;
+
+    const model =
+      productModels.current[focusedRef.current];
+
+    const deltaY = e.clientY - dragState.current.lastY;
+    const deltaX = e.clientX - dragState.current.lastX;
+
+    rotationTarget.current.y += deltaX * 0.01;
+
+    dragState.current.lastX = e.clientX;
+    dragState.current.lastY = e.clientY;
+  };
+
+
+  const onPointerUp = () => {
+    dragState.current.active = false;
+  };
+
+  useEffect(() => {
+      window.addEventListener("pointerdown", onPointerDown);
+      window.addEventListener("pointermove", onPointerMove);
+      window.addEventListener("pointerup", onPointerUp);
+  }, []);
+
   useEffect(() => {
     loadEnvironment();
 
@@ -95,6 +166,9 @@ export default function ThreeD() {
 
     // PRODUCTS
     Bottle1(product2, (mesh) => {
+      console.log("product2 children:", product2.children.length);
+      productModels.current.product2 = mesh;
+
       mesh.traverse((child) => {
         if (child.isMesh) {
           productMeshes.current.push(child);
@@ -102,6 +176,9 @@ export default function ThreeD() {
       });
     })
     Bottle2(product1, (mesh) => {
+      console.log("product1 children:", product1.children.length);
+      productModels.current.product1 = mesh;
+
       mesh.traverse((child) => {
         if (child.isMesh) {
           productMeshes.current.push(child);
@@ -109,6 +186,9 @@ export default function ThreeD() {
       });
     })
     Bottle3(product3, (mesh) => {
+      console.log("product3 children:", product3.children.length);
+      productModels.current.product3 = mesh;
+
       mesh.traverse((child) => {
         if (child.isMesh) {
           productMeshes.current.push(child);
@@ -127,6 +207,8 @@ export default function ThreeD() {
       mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
       raycaster.setFromCamera(mouse, camera);
+
+      resetAllProducts();
 
       const hits = raycaster.intersectObjects(productMeshes.current, false);
 
@@ -176,7 +258,7 @@ export default function ThreeD() {
     };
 
     window.addEventListener("click", onProductClick);
-
+    
 
     // =========================
     // FOG (سينمائي عمق)
@@ -221,20 +303,22 @@ export default function ThreeD() {
     const glowTarget = new THREE.Vector3();
     const glowCurrent = new THREE.Vector3();
 
-  // =========================
-  // LIGHT CINEMATIC BASE
-  // =========================
-  ambientLight.intensity = 0.2;
-  fillLight.intensity = 0.4;
-  sunLight.intensity = 3;
-  rimLight.intensity = 1.5;
-  mouseLight.intensity = 2;
+    // =========================
+    // LIGHT CINEMATIC BASE
+    // =========================
+    ambientLight.intensity = 0.2;
+    fillLight.intensity = 0.4;
+    sunLight.intensity = 3;
+    frontLight.intensity = 2;
+    frontFillLight.intensity = 1;
+    rimLight.intensity = 1.5;
+    mouseLight.intensity = 2;
 
-  // soft cinematic tone
-  const rendererInstance = getRenderer();
-  if (rendererInstance) {
-    rendererInstance.toneMappingExposure = 1.2;
-  }
+    // soft cinematic tone
+    const rendererInstance = getRenderer();
+    if (rendererInstance) {
+      rendererInstance.toneMappingExposure = 1.2;
+    }
 
     // =========================
     // MOUSE
@@ -313,6 +397,22 @@ export default function ThreeD() {
       mouseLight.target.position.copy(glowGroup.position);
       mouseLight.target.updateMatrixWorld();
 
+      if (focusedRef.current) {
+        // const group =
+        //   { product1, product2, product3 }[focusedRef.current];
+
+        // group.rotation.y +=
+        //   (rotationTarget.current.y - group.rotation.y) * 0.08;
+
+        const model =
+          productModels.current[focusedRef.current];
+
+          if (model) {
+            model.rotation.y +=
+              (rotationTarget.current.y - model.rotation.y) * 0.08;
+          }
+      }
+
       composer.render();
     };
 
@@ -321,6 +421,10 @@ export default function ThreeD() {
     return () => {
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("click", onProductClick);
+
+      window.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", onPointerUp);
     };
   }, []);
 
@@ -343,14 +447,16 @@ export default function ThreeD() {
                 const keyToClose = selectedProduct;
                 setSelectedProduct(null);
                 focusedRef.current = null;
+                
                 // Reset bottle position
                 const group = { product1, product2, product3 }[keyToClose];
                 if (group) {
                   const orig = original.current.get(group);
-                  gsap.to(group.position, {
-                    z: orig?.z || 0,
+                  gsap.to(group.rotation, {
+                    x: 0,
+                    y: 0,
+                    z: 0,
                     duration: 0.8,
-                    ease: "power2.out",
                   });
                 }
               }}
