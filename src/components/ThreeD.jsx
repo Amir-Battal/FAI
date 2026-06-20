@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import gsap from "gsap";
-
 import { scene } from "../three/scene";
 import { camera } from "../three/camera";
 import { getRenderer } from "../three/renderer";
-
 import {
   ambientLight,
   sunLight,
@@ -15,34 +13,23 @@ import {
   frontLight,
   frontFillLight,
 } from "../three/lights";
-
 import {
   product1,
   product2,
   product3,
   environmentGroup,
 } from "../three/groups";
-
 import { raycaster, mouse } from "../three/raycaster";
 import composer from "../three/composer";
 import { loadEnvironment } from "../three/environment";
 import { FloorBrown } from "../Models/Scene1/FloorBrown";
 import { RockLeaf } from "../Models/Scene1/RockLeaf";
-import FaiLogo from "../components/FaiLogo";
 import { Rock1 } from "../Models/Scene1/Rock1";
 import { GzhelVase } from "../Models/Scene1/GzhelVase";
 import { Leaf2 } from "../Models/Scene1/Leaf2";
 import {Bottle1} from "../Models/Scene1/Bottle1";
 import {Bottle2} from "../Models/Scene1/Bottle2";
 import {Bottle3} from "../Models/Scene1/Bottle3";
-import Pattern from "./Pattern";
-import Pattern2 from "./Pattern2";
-import Pattern3 from "./Pattern3";
-import Pattern4 from "./Pattern4";
-
-import GhasaqIcon from "./Icons/GhasaqIcon";
-import NadaIcon from "./Icons/NadaIcon";
-import SafaIcon from "./Icons/SafaIcon";
 
 
 
@@ -53,29 +40,19 @@ const PRODUCTS = {
 };
 
 export default function ThreeD() {
-  const [selectedProduct, setSelectedProduct] = useState(null);
-
   const focusedRef = useRef(null);
-  const targetLookAt = useRef(new THREE.Vector3());
   const original = useRef(new Map());
-  const orbitEnabled = useRef(false);
   const productMeshes = useRef([]);
-
+  const draggedProductRef = useRef(null);
   const floorRef = useRef(null);
-
-  const dragState = useRef({
-    active: false,
-    lastX: 0,
-    lastY: 0,
-  });
-  const rotationTarget = useRef({
-    y: 0,
-  });
+  const dragState = useRef({ active: false, lastX: 0, lastY: 0 });
+  const rotationTargets = useRef({ product1: 0, product2: 0, product3: 0 });
   const productModels = useRef({});
 
   // Initialize renderer when component mounts
   useEffect(() => {
     const renderer = getRenderer();
+    
     if (!renderer) {
       console.error("Failed to initialize renderer");
     }
@@ -92,63 +69,92 @@ export default function ThreeD() {
     });
   };
 
-  const resetAllProducts = () => {
-    [product1, product2, product3].forEach((group) => {
-      const orig = original.current.get(group);
 
-      gsap.to(group.position, {
-        x: orig.x,
-        y: orig.y,
-        z: orig.z,
-        duration: 1,
-        ease: "power3.out",
-      });
-
-      gsap.to(group.rotation, {
-        x: 0,
-        y: 0,
-        z: 0,
-        duration: 1,
-        ease: "power3.out",
-      });
-    });
-
-    rotationTarget.current.y = 0;
-  };
-
-  const onPointerDown = (e) => {
+  const clearFocus = () => {
     if (!focusedRef.current) return;
 
+    const group = { product1, product2, product3 }[focusedRef.current];
+    const orig = original.current.get(group);
+
+    gsap.to(group.position, {
+      x: orig.x,
+      y: orig.y,
+      z: orig.z,
+      duration: 1,
+      ease: "power3.out",
+    });
+
+    const model = productModels.current[focusedRef.current];
+
+    if (model) {
+      gsap.to(model.rotation, {
+        y: 0,
+        duration: 0.8,
+      });
+    }
+
+    focusedRef.current = null;
+
+    rotationTargets.current = {
+      product1: 0,
+      product2: 0,
+      product3: 0,
+    };
+  };
+
+
+  const onPointerDown = (e) => {
+    mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+
+    const hits = raycaster.intersectObjects( productMeshes.current, true );
+
+    if (!hits.length) {
+        clearFocus();
+        return;
+    }
+
+    const productKey = hits[0].object.userData.productKey;
+
+    if (!productKey) return;
+
+    draggedProductRef.current = productKey;
     dragState.current.active = true;
     dragState.current.lastX = e.clientX;
     dragState.current.lastY = e.clientY;
+
+    selectProduct(productKey);
   };
 
 
   const onPointerMove = (e) => {
     if (!dragState.current.active) return;
 
-    const model =
-      productModels.current[focusedRef.current];
-
+    const model = productModels.current[focusedRef.current];
     const deltaY = e.clientY - dragState.current.lastY;
     const deltaX = e.clientX - dragState.current.lastX;
 
-    rotationTarget.current.y += deltaX * 0.01;
+    const key = draggedProductRef.current;
+
+    if (!key) return;
+
+    rotationTargets.current[key] += deltaX * 0.01;
 
     dragState.current.lastX = e.clientX;
     dragState.current.lastY = e.clientY;
   };
 
-
   const onPointerUp = () => {
     dragState.current.active = false;
+    draggedProductRef.current = null;
   };
 
   useEffect(() => {
-      window.addEventListener("pointerdown", onPointerDown);
-      window.addEventListener("pointermove", onPointerMove);
-      window.addEventListener("pointerup", onPointerUp);
+    window.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", onPointerUp);
   }, []);
 
   useEffect(() => {
@@ -203,58 +209,57 @@ export default function ThreeD() {
     // PRODUCT CLICK HANDLER
     // =========================
     const onProductClick = (e) => {
-      // Update mouse for raycaster
       mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
       raycaster.setFromCamera(mouse, camera);
 
-      resetAllProducts();
+      const hits = raycaster.intersectObjects( productMeshes.current, false );
 
-      const hits = raycaster.intersectObjects(productMeshes.current, false);
+      if (!hits.length) return;
 
-      if (hits.length > 0) {
-        const clickedMesh = hits[0].object;
-        const productKey = clickedMesh.userData.productKey;
+      const clickedMesh = hits[0].object;
+      const productKey = clickedMesh.userData.productKey;
 
-        if (productKey && PRODUCTS[productKey]) {
-          selectProduct(productKey);
-        }
+      if (productKey && PRODUCTS[productKey]) {
+        selectProduct(productKey);
       }
     };
 
     const selectProduct = (key) => {
-      // Deselect previous
       if (focusedRef.current && focusedRef.current !== key) {
         const prevGroup = { product1, product2, product3 }[focusedRef.current];
         const orig = original.current.get(prevGroup);
 
         gsap.to(prevGroup.position, {
-          z: orig?.z || 0,
+          x: orig.x,
+          y: orig.y,
+          z: orig.z,
           duration: 0.8,
           ease: "power2.out",
         });
-      }
 
-      if (focusedRef.current === key) {
-        // Click same product = deselect
-        setSelectedProduct(null);
-        focusedRef.current = null;
-        return;
+        const prevModel = productModels.current[focusedRef.current];
+
+        if (prevModel) {
+          gsap.to(prevModel.rotation, {
+            y: 0,
+            duration: 0.8,
+          });
+        }
       }
 
       focusedRef.current = key;
-      setSelectedProduct(key);
 
-      // Get the product group
       const group = { product1, product2, product3 }[key];
       const orig = original.current.get(group);
 
-      // Animate bottle coming forward ONLY (no rotation)
       gsap.to(group.position, {
-        z: (orig?.z || 0) + 8,
+        z: orig.z + 8,
         duration: 1,
-        ease: "power2.out",
+        ease: "power3.out",
       });
+      rotationTarget.current.y = 0;
     };
 
     window.addEventListener("click", onProductClick);
@@ -349,6 +354,12 @@ export default function ThreeD() {
 
       raycaster.setFromCamera(mouse, camera);
 
+      const productHits = raycaster.intersectObjects( productMeshes.current, true );
+
+      document.body.style.cursor = productHits.length > 0
+        ? "grab"
+        : "default";
+
       // =========================
       // FLOOR HIT
       // =========================
@@ -376,7 +387,6 @@ export default function ThreeD() {
       // TRAIL EFFECT (blur illusion)
       // =========================
       const speed = glowGroup.position.distanceTo(glowTarget);
-
       const baseScale = 1 + speed * 0.08;
 
       glowCore.scale.set(baseScale, baseScale, baseScale);
@@ -397,22 +407,13 @@ export default function ThreeD() {
       mouseLight.target.position.copy(glowGroup.position);
       mouseLight.target.updateMatrixWorld();
 
-      if (focusedRef.current) {
-        // const group =
-        //   { product1, product2, product3 }[focusedRef.current];
+      Object.keys(productModels.current).forEach((key) => {
+        const model = productModels.current[key];
 
-        // group.rotation.y +=
-        //   (rotationTarget.current.y - group.rotation.y) * 0.08;
+        if (!model) return;
 
-        const model =
-          productModels.current[focusedRef.current];
-
-          if (model) {
-            model.rotation.y +=
-              (rotationTarget.current.y - model.rotation.y) * 0.08;
-          }
-      }
-
+        model.rotation.y += (rotationTargets.current[key] - model.rotation.y) * 0.08;
+      });
       composer.render();
     };
 
@@ -431,71 +432,6 @@ export default function ThreeD() {
 
   return (
     <>
-      {selectedProduct && (
-        <div 
-          className={`product-overlay fixed w-[450px] h-[100vh] bg-White flex items-center justify-center
-            ${(selectedProduct === ("product3") ) ? (
-              "top-0 left-0"
-            ) : (
-              "top-0 right-0"
-            ) }
-          `}>
-          <div className="product-card w-full h-[90vh] px-[50px] py-[40px] text-white text-right relative rounded-[16px] mb-[30px] flex items-center justify-center text-[3rem] ">
-            <button 
-              className={`${selectedProduct === ("product3") ? "close-btn-left" : "close-btn"}`} 
-              onClick={() => {
-                const keyToClose = selectedProduct;
-                setSelectedProduct(null);
-                focusedRef.current = null;
-                
-                // Reset bottle position
-                const group = { product1, product2, product3 }[keyToClose];
-                if (group) {
-                  const orig = original.current.get(group);
-                  gsap.to(group.rotation, {
-                    x: 0,
-                    y: 0,
-                    z: 0,
-                    duration: 0.8,
-                  });
-                }
-              }}
-            >×</button>
-            {/* <div className="product-image">🧴</div> */}
-            <div className="absolute w-full h-[100vh] flex flex-col justify-between">
-              <div className="w-full flex flex-row">
-                <Pattern2 />
-                <Pattern />
-              </div>
-              <div className="w-full flex flex-row">
-                <Pattern3 />
-                <Pattern4 />
-              </div>
-            </div>
-
-            <div className="w-full flex flex-col justify-center items-center gap-5">
-              <div className="flex justify-center items-center mt-[-30%]">
-                {(PRODUCTS[selectedProduct]?.icon === "NadaIcon") ? (
-                  <NadaIcon />
-                ) : (PRODUCTS[selectedProduct]?.icon === "SafaIcon") ? (
-                  <SafaIcon />
-                ) : (
-                  <GhasaqIcon />
-                )}
-              </div>
-
-              <div className="w-full flex flex-col text-center">
-                <h2 className="text-[50px] text-[#1f3fc3] font-[Naskh]">{PRODUCTS[selectedProduct]?.title}</h2>
-                <h2 className="text-[110px] text-[#1f3fc3] font-[Dahlia] mt-[-12%]">{PRODUCTS[selectedProduct]?.enTitle}</h2>
-                <h3 className="text-[25px] text-[#1f3fc3] font-[Dahlia]">{PRODUCTS[selectedProduct]?.description}</h3>
-                <h3 className="text-[25px] text-[#1f3fc3] font-[Dahlia]">{PRODUCTS[selectedProduct]?.size}</h3>
-              </div>
-
-              <button className="text-lg border border-[#488dc7] px-2 py-1 bg-[#1f3fc3] font-[Naskh] cursor-pointer hover:bg-[#2d51e1] z-99">اشتري الآن</button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }
