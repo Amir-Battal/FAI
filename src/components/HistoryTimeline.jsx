@@ -117,7 +117,7 @@ const HistoryTimeline = () => {
                   <img
                     src={item.image}
                     alt={item.title}
-                    className=" w-full h-[300px] md:h-[500px] lg:h-[500px] mt-[50%] sm:mt-[30%] md:mt-0 lg:mt-0 object-cover rounded-[32px] opacity-99"
+                    className=" w-full h-[200px] sm:h-[300px] md:h-[500px] lg:h-[500px] mt-[50%] sm:mt-[30%] md:mt-0 lg:mt-0 object-cover rounded-[32px] opacity-99"
                   />
                 </div>
 
