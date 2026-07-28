@@ -131,7 +131,7 @@ const Navbar = () => {
               : isContact
               ? "flex justify-start items-center"
               // : "flex justify-center items-center"
-              : "lg:flex lg:justify-center lg:items-center lg:relative fixed top-5 right-5 z-50"
+              : "lg:flex lg:justify-center lg:items-center lg:relative fixed top-5 left-70 z-50"
           }
         `}
       >
