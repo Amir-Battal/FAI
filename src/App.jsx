@@ -5,12 +5,20 @@ import HistoryTimeline from "./components/HistoryTimeline";
 import ContactSection from "./components/ContactSection";
 import StackProducts2 from "./components/StackProducts2";
 import LoadingScreen from "./components/LoadingScreen";
+import MobileLoadingScreen from "./components/MobileLoadingScreen";
 
 export default function App() {
+
+  const isMobile = window.innerWidth < 768;
+
   return (
     <>
-
-      <LoadingScreen />
+  
+      {isMobile
+        ? (<MobileLoadingScreen />)
+        :(<LoadingScreen />)
+      }
+      
 
       <Navbar />
 
