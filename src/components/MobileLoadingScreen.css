@@ -1,3 +1,5 @@
+@font-face { font-family: 'Naskh'; src: url('../assets/Font/Naskh.ttf') format('woff2'); font-display: swap; } .loading-number { font-family: 'Naskh', serif; font-variant-numeric: normal; font-feature-settings: 'tnum' 0, 'lnum' 0; line-height: 1; }
+
 .mobile-loading{
     position:fixed;
     inset:0;
@@ -50,6 +52,7 @@
     color:white;
     font-size:18px;
     letter-spacing:2px;
+    font-family: Nask;
 }
 
 @keyframes float{
