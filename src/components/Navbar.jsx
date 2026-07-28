@@ -178,13 +178,13 @@ const Navbar = () => {
             {visible && (
               <ul
                 className={`
-                  absolute mt-40 left-1/2 -translate-x-1/2
+                  absolute mt-30 sm:mt-30 md:mt-40 lg:mt-40 left-1/2 -translate-x-1/2
                   flex gap-10 whitespace-nowrap text-lg font-[Naskh]
                   transition-all duration-500
                   ${textColor}
                   ${
                     menuOpen
-                      ? "opacity-100 translate-y-0"
+                      ? "opacity-100 translate-y-0 ml-[-70%]"
                       : "opacity-0 -translate-y-3"
                   }
                 `}
