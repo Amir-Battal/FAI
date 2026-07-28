@@ -129,9 +129,9 @@ const Navbar = () => {
             !scrolled
               ? "flex justify-between items-center"
               : isContact
-              ? "lg:flex lg:justify-start lg:items-center lg:relative fixed top-5 left-70 z-50"
+              ? "lg:flex lg:justify-start lg:items-center lg:relative fixed top-5 lg:left-300 md:left-300 sm:left-70 left-70 z-50"
               // : "flex justify-center items-center"
-              : "lg:flex lg:justify-center lg:items-center lg:relative fixed top-5 left-70 z-50"
+              : "lg:flex lg:justify-center lg:items-center lg:relative fixed top-5 lg:left-150 md:left-150 sm:left-70 left-70 z-50"
           }
         `}
       >
