@@ -49,6 +49,9 @@ export default function ThreeD() {
   const rotationTargets = useRef({ product1: 0, product2: 0, product3: 0 });
   const productModels = useRef({});
 
+  // *** MOBILE
+  const isMobile = window.innerWidth < 768;
+
   // Initialize renderer when component mounts
   useEffect(() => {
     const renderer = getRenderer();
@@ -170,37 +173,52 @@ export default function ThreeD() {
     });
 
 
-    // PRODUCTS
-    Bottle1(product2, (mesh) => {
-      console.log("product2 children:", product2.children.length);
-      productModels.current.product2 = mesh;
+    // *** MOBILE
+    if (isMobile) {
+      Bottle1(product2, (mesh) => {
+        console.log("product2 children:", product2.children.length);
+        productModels.current.product2 = mesh;
 
-      mesh.traverse((child) => {
-        if (child.isMesh) {
-          productMeshes.current.push(child);
-        }
-      });
-    })
-    Bottle2(product1, (mesh) => {
-      console.log("product1 children:", product1.children.length);
-      productModels.current.product1 = mesh;
+        mesh.traverse((child) => {
+          if (child.isMesh) {
+            productMeshes.current.push(child);
+          }
+        });
+      })
+      
+    } else {
+      // PRODUCTS
+      Bottle1(product2, (mesh) => {
+        console.log("product2 children:", product2.children.length);
+        productModels.current.product2 = mesh;
 
-      mesh.traverse((child) => {
-        if (child.isMesh) {
-          productMeshes.current.push(child);
-        }
-      });
-    })
-    Bottle3(product3, (mesh) => {
-      console.log("product3 children:", product3.children.length);
-      productModels.current.product3 = mesh;
+        mesh.traverse((child) => {
+          if (child.isMesh) {
+            productMeshes.current.push(child);
+          }
+        });
+      })
+      Bottle2(product1, (mesh) => {
+        console.log("product1 children:", product1.children.length);
+        productModels.current.product1 = mesh;
 
-      mesh.traverse((child) => {
-        if (child.isMesh) {
-          productMeshes.current.push(child);
-        }
-      });
-    })
+        mesh.traverse((child) => {
+          if (child.isMesh) {
+            productMeshes.current.push(child);
+          }
+        });
+      })
+      Bottle3(product3, (mesh) => {
+        console.log("product3 children:", product3.children.length);
+        productModels.current.product3 = mesh;
+
+        mesh.traverse((child) => {
+          if (child.isMesh) {
+            productMeshes.current.push(child);
+          }
+        });
+      })
+    }
 
     // Store original positions after models load
     saveOriginalPositions();

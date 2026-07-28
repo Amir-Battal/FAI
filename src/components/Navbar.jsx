@@ -18,6 +18,9 @@ const Navbar = () => {
   const openTimer = useRef(null);
   const closeTimer = useRef(null);
 
+  // *** MOBILE
+  const isMobile = window.innerWidth < 768;
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 100);
@@ -104,7 +107,7 @@ const Navbar = () => {
   const logoColor = darkMode ? "#000000" : "#ffffff";
 
   const MenuItems = () => (
-    <div className="w-full flex flex-row justify-between gap-20 font-[Dahlia] tracking-wider text-2xl">
+    <div className={`w-full flex flex-row justify-between font-[Dahlia] tracking-wider ${isMobile ? "text-xl gap-8" : "text-2xl gap-20" }`}>
       <li>
         <button onClick={() => scrollToSection("products")} className="hover:text-gray-600 cursor-pointer">Buy</button>
       </li>
@@ -138,7 +141,10 @@ const Navbar = () => {
               onClick={() => scrollToSection("products")}
               className="cursor-pointer"
             >
-              <FaiLogo color={logoColor} />
+              {isMobile 
+                ? ( <FaiLogo size="30" color={logoColor} /> )
+                : ( <FaiLogo size="50" color={logoColor} /> )
+              }
             </button>
 
             <ul className={`flex gap-10 text-lg font-[Naskh] ${textColor}`}>
