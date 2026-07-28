@@ -164,7 +164,7 @@ const Navbar = () => {
           >
             {/* LOGO */}
             <button
-              onClick={() => scrollToSection("products")}
+              // onClick={() => scrollToSection("products")}
               className="cursor-pointer transition-transform duration-300 hover:scale-105"
             >
               {/* <FaiLogo color={logoColor} /> */}
