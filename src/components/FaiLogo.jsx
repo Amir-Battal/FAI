@@ -1,11 +1,11 @@
-const FaiLogo = ({ color = "#ffffff" }) => {
+const FaiLogo = ({ color = "#ffffff", size = 50 }) => {
 
   return (
     <div className="w-full z-99">
-      <svg className="[mix-blend-mode:difference]" id="Layer_2" width={50} xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 645.97 1652.49">
+      <svg className="[mix-blend-mode:difference]" id="Layer_2" width={size} xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 645.97 1652.49">
         <circle fill={color} cx="315.47" cy="163.07" r="134.59"/>
         <g>
-          <circle fill={color} cx="450.06" cy="1496.93" r="134.59"/>
+          <circle fill={color} cx="450.06" cy="1496.93" r="134.59"/>  
           <circle fill={color} cx="180.89" cy="1496.93" r="134.59"/>
         </g>
         <path fill={color} d="M584.65,593.45c0,148.43-120.31,268.74-268.71,268.74h-1.13s0-186.89,0-186.89H46.3c0-202.49,164.15-366.64,366.64-366.64h171.68s0,284.8,0,284.8h.03Z"/>
