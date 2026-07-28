@@ -150,7 +150,7 @@ const HistoryTimeline = () => {
                     {item.description}
                   </p>
 
-                  <div className="mt-10 flex items-center gap-4">
+                  <div className="mt-5 sm:mt-10 md:mt-10 lg:mt-10 flex items-center gap-4">
                     <div className="w-12 h-px bg-black/30" />
 
                     <span className="text-sm uppercase tracking-[0.2em] text-neutral-500">
