@@ -117,7 +117,7 @@ export default function ContactSection() {
           </form>
         </div>
 
-        <div className="mt-24 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between gap-4 text-white/40 text-sm">
+        <div className="mt-4 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between gap-4 text-white/40 text-sm">
           <span><a href="https://amirbattal.com" target="_bank">© 2026 Amir Battal</a></span>
           <span>Creative Coder</span>
         </div>

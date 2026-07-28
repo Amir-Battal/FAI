@@ -130,7 +130,8 @@ const Navbar = () => {
               ? "flex justify-between items-center"
               : isContact
               ? "flex justify-start items-center"
-              : "flex justify-center items-center"
+              // : "flex justify-center items-center"
+              : "lg:flex lg:justify-center lg:items-center lg:relative fixed top-5 right-5 z-50"
           }
         `}
       >
@@ -156,16 +157,21 @@ const Navbar = () => {
         {/* SCROLLED STATE */}
         {scrolled && (
           <div
-            className="relative flex flex-col items-center pb-32"
+            className="relative flex flex-col pb-32"
             onMouseEnter={handleEnter}
             onMouseLeave={handleLeave}
+            onClick={() => setMenuOpen(!menuOpen)}
           >
             {/* LOGO */}
             <button
               onClick={() => scrollToSection("products")}
               className="cursor-pointer transition-transform duration-300 hover:scale-105"
             >
-              <FaiLogo color={logoColor} />
+              {/* <FaiLogo color={logoColor} /> */}
+              {isMobile 
+                ? ( <FaiLogo size="35" color={logoColor} /> )
+                : ( <FaiLogo size="50" color={logoColor} /> )
+              }
             </button>
 
             {/* MENU ITEMS */}

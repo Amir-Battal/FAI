@@ -10,13 +10,17 @@ export default function ProductScene({ product }) {
   const [zoom, setZoom] = useState({ x: 50, y: 50, show: false });
 
   useEffect(() => {
+    // *** MOBILE
+    const isMobile = window.innerWidth < 768;
+    
     const container = canvasRef.current;
     if (!container) return;
 
     const scene = new THREE.Scene();
 
     const camera = new THREE.PerspectiveCamera(
-      45,
+      isMobile ? 55 : 45,
+      // 45,
       container.clientWidth / container.clientHeight,
       0.1,
       100
@@ -25,11 +29,16 @@ export default function ProductScene({ product }) {
 
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
-      antialias: true,
+      // antialias: true,
+      antialias: !isMobile,
+      powerPreference: "high-performance",
     });
 
     renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(
+      isMobile ? 1 : Math.min(window.devicePixelRatio, 2)
+    );
     container.appendChild(renderer.domElement);
 
     scene.add(new THREE.AmbientLight(0xffffff, 2));
@@ -60,7 +69,8 @@ export default function ProductScene({ product }) {
       const meshes = [];
       model.traverse((c) => c.isMesh && meshes.push(c));
 
-      const COUNT = 12000;
+      // const COUNT = 12000;
+      const COUNT = isMobile ? 3500 : 12000;
 
       const pos = new Float32Array(COUNT * 3);
       const orig = new Float32Array(COUNT * 3);
@@ -135,19 +145,23 @@ export default function ProductScene({ product }) {
   }, [product]);
 
   return (
-    <section className="w-full h-screen relative bg-white overflow-hidden font-[Dahlia]">
+    // <section className="w-full h-screen relative bg-white overflow-hidden font-[Dahlia]">
+    <section className="w-full relative min-h-screen lg:h-screen bg-white overflow-hidden font-[Dahlia]">
 
       <div ref={canvasRef} className="absolute inset-0" />
 
       {/* CONTENT */}
-      <div className="relative z-10 h-full flex justify-between items-center px-20">
+      {/* <div className="relative z-10 h-full flex justify-between items-center px-20"> */}
+      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-center gap-3 lg:gap-10 px-5 md:px-10 lg:px-20 py-10">
 
         {/* LEFT */}
-        <div className="w-[45%]">
+        {/* <div className="w-[45%]"> */}
+        <div className="w-full lg:w-[45%]">
 
           {/* MAIN IMAGE ZOOM */}
           <div
-            className="w-full h-[420px] rounded-2xl overflow-hidden relative"
+            // className="w-full h-[420px] rounded-2xl overflow-hidden relative"
+            className="w-full h-[280px] sm:h-[380px] lg:h-[520px] rounded-2xl overflow-hidden relative"
             onMouseMove={(e) => {
               const rect = e.currentTarget.getBoundingClientRect();
 
@@ -179,7 +193,8 @@ export default function ProductScene({ product }) {
               >
                 <img
                   src={img}
-                  className="w-14 h-14 object-cover rounded"
+                  // className="w-14 h-14 object-cover rounded"
+                  className="w-12 h-12 sm:w-14 sm:h-14 object-cover rounded"
                 />
 
                 {activeImage !== i && (
@@ -199,29 +214,31 @@ export default function ProductScene({ product }) {
         </div>
 
         {/* RIGHT */}
-        <div className="w-[45%]" style={{ color: product.accent }}>
+        {/* <div className="w-[45%]" style={{ color: product.accent }}> */}
+        <div className="w-full lg:w-[45%] lg:text-left" style={{ color: product.accent }}>
 
           <span className="text-lg tracking-widest uppercase">
             {product.tagline}
           </span>
 
-          <h1 className="text-6xl font-[Naskh] mt-2">{product.arabic}</h1>
-          <h1 className="text-9xl font-light">{product.english}</h1>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-[Naskh] mt-2">{product.arabic}</h1>
+          <h1 className="text-5xl sm:text-7xl lg:text-9xl font-light">{product.english}</h1>
 
-          <p className="text-black/60 mt-4 tracking-wider">
+          {/* <p className="text-black/60 mt-4 tracking-wider"> */}
+          <p className="text-black/60 mt-2 lg:mt-4 tracking-wider max-w-xl mx-auto lg:mx-0">
             {product.description}
           </p>
 
           {/* EXTRA DATA */}
-          <div className="mt-6 text-sm text-black/70 space-y-2 tracking-wider">
+          <div className="mt-2 sm:mt-4 lg:mt-6 text-sm text-black/70 lg:space-y-2 tracking-wider">
             <p><span className="font-semibold">Skin Type:</span> {product.skinType}</p>
             <p><span className="font-semibold">Texture:</span> {product.texture}</p>
           </div>
 
           {/* BENEFITS */}
-          <div className="mt-5">
-            <p className="font-semibold mb-2 text-2xl">Benefits</p>
-            <ul className="text-black/60 list-disc ml-5 space-y-1 tracking-wide">
+          <div className="mt-2 sm:mt-3 lg:mt-5">
+            <p className="font-semibold lg:mb-2 text-2xl">Benefits</p>
+            <ul className="text-black/60 list-disc ml-5 lg:space-y-1 tracking-wide">
               {product.benefits?.map((b, i) => (
                 <li key={i}>{b}</li>
               ))}
@@ -229,13 +246,14 @@ export default function ProductScene({ product }) {
           </div>
 
           {/* USAGE */}
-          <p className="mt-5 text-black/60 tracking-wide">
+          <p className="mt-2 lg:mt-5 text-black/60 tracking-wide">
             <span className="font-semibold text-black">How to use:</span>{" "}
             {product.usage}
           </p>
 
           {/* PRICE */}
-          <div className="mt-6 flex gap-6 items-center tracking-wider">
+          {/* <div className="mt-6 flex gap-6 items-center tracking-wider"> */}
+          <div className="mt-[-100%] ml-[50%] md:ml-0 lg:ml-0 lg:mt-8 flex lg:flex flex-row gap-5 items-center justify-center lg:justify-start">
             <span className="text-3xl">{product.price}</span>
 
             <button
