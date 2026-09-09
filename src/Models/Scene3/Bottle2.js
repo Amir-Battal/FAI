@@ -5,7 +5,7 @@ export function Bottle2(parent, onLoad = null) {
   loadModel({
     parent,
     scene,
-    path: "https://res.cloudinary.com/dqe36doqn/image/upload/v1781537225/prodcutSAFAA_nhhkur.glb",
+    path: "https://res.cloudinary.com/c9tptioy/image/upload/v1788953872/prodcutSAFAA.glb",
     position: [-1.5, -3, -1.2],
     scale: [5, 5, 5],
     name: "bottle2",

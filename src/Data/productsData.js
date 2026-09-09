@@ -32,10 +32,10 @@ export const products = [
     accent: "#1f3fc3",
 
     images: [
-      "https://res.cloudinary.com/dqe36doqn/image/upload/v1781943226/FAI___NADA_1_p95ua2.jpg",
-      "https://res.cloudinary.com/dqe36doqn/image/upload/v1781943347/FAI___NADA_Pack.C_cj1eoj.jpg",
-      "https://res.cloudinary.com/dqe36doqn/image/upload/v1781717411/FAI-BE-12B_p6y6ar.jpg",
-      "https://res.cloudinary.com/dqe36doqn/image/upload/v1781946724/FAI-BE-01_r5ajx3.jpg",
+      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955108/FAI___NADA_1.jpg",
+      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955111/FAI___NADA_Pack.C.jpg",
+      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955106/FAI-BE-12B.jpg",
+      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955192/FAI-BE-01.jpg",
     ],
   },
 
@@ -68,10 +68,10 @@ export const products = [
     accent: "#1f3fc3",
 
     images: [
-      "https://res.cloudinary.com/dqe36doqn/image/upload/v1781943213/FAI___SAFAA_1_o9yr3v.jpg",
-      "https://res.cloudinary.com/dqe36doqn/image/upload/v1781943376/FAI-BE-08B_yqzjve.jpg",
-      "https://res.cloudinary.com/dqe36doqn/image/upload/v1781943349/FAI___SAFAA_Pack.C_vpdsfk.jpg",
-      "https://res.cloudinary.com/dqe36doqn/image/upload/v1781946724/FAI-BE-01_r5ajx3.jpg",
+      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955175/FAI___SAFAA_1.jpg",
+      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955180/FAI-BE-08B.jpg",
+      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955181/FAI___SAFAA_Pack.C.jpg",
+      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955192/FAI-BE-01.jpg",
     ],
   },
 
@@ -104,10 +104,10 @@ export const products = [
     accent: "#1f3fc3",
 
     images: [
-      "https://res.cloudinary.com/dqe36doqn/image/upload/v1781943220/FAI___GHASAQ_1_v0ddn5.jpg",
-      "https://res.cloudinary.com/dqe36doqn/image/upload/v1781943393/FAI-BE-11_eqe0w7.jpg",
-      "https://res.cloudinary.com/dqe36doqn/image/upload/v1781943346/FAI___GHASAQ_Pack.C_lf8t7h.jpg",
-      "https://res.cloudinary.com/dqe36doqn/image/upload/v1781946724/FAI-BE-01_r5ajx3.jpg",
+      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955154/FAI___GHASAQ_1.jpg",
+      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955160/FAI-BE-11.jpg",
+      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955163/FAI___GHASAQ_Pack.C.jpg",
+      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955192/FAI-BE-01.jpg",
     ],
   },
 ];
