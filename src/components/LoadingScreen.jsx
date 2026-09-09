@@ -81,7 +81,7 @@ export default function LoadingScreen({ onComplete }) {
         <div className="w-75 h-155 flex items-center justify-center overflow-hidden ">
           <video
             ref={videoRef}
-            src="https://res.cloudinary.com/dqe36doqn/video/upload/v1781541163/liquidLogo_1_gj6s9v.mp4"
+            src="https://res.cloudinary.com/c9tptioy/video/upload/v1788955441/liquidLogo_1.mp4"
             muted
             playsInline
             loop={false}
