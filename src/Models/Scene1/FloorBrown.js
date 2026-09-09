@@ -6,7 +6,7 @@ export function FloorBrown(parent, onLoaded) {
   loadModel({
     parent,
     scene,
-    path: "https://res.cloudinary.com/dqe36doqn/image/upload/v1781460203/floorBrown_s6i83z.glb",
+    path: "https://res.cloudinary.com/c9tptioy/image/upload/v1788954223/floorBrown.glb",
     position: [0, -20, -120],
     scale: [15, 15, 15],
 
