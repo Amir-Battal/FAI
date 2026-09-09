@@ -11,7 +11,7 @@ const story = [
     description:
       "Our journey started with a simple idea: create skincare that feels luxurious while delivering real results.",
     image:
-      "https://res.cloudinary.com/dqe36doqn/image/upload/v1781967985/FAI-BE-02B_cieeve.jpg",
+      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955602/FAI-BE-02B.jpg",
   },
   {
     year: "2022",
@@ -19,7 +19,7 @@ const story = [
     description:
       "We spent months researching premium botanical ingredients and advanced formulations.",
     image:
-      "https://res.cloudinary.com/dqe36doqn/image/upload/v1781969025/FAI-BE-04A_zfdwib.gif",
+      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955707/FAI-BE-04A.gif",
   },
   {
     year: "2023",
@@ -27,7 +27,7 @@ const story = [
     description:
       "Every formula was carefully tested and improved until we achieved the perfect balance.",
     image:
-      "https://res.cloudinary.com/dqe36doqn/image/upload/v1781969322/FAI-BE-05_npqsbj.jpg",
+      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955723/FAI-BE-05.jpg",
   },
   {
     year: "2024",
@@ -35,7 +35,7 @@ const story = [
     description:
       "Our first collection launched and quickly became loved by customers seeking effective skincare.",
     image:
-      "https://res.cloudinary.com/dqe36doqn/image/upload/v1781969372/FAI-BE-09A_vvq6iy.jpg",
+      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955828/FAI-BE-09A.jpg",
   },
   {
     year: "Today",
@@ -43,7 +43,7 @@ const story = [
     description:
       "We continue innovating while staying true to our mission of quality and transparency.",
     image:
-      "https://res.cloudinary.com/dqe36doqn/image/upload/v1781966736/FAI-BE-04B_kough0.jpg",
+      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955831/FAI-BE-04B.jpg",
   },
 ];
 
