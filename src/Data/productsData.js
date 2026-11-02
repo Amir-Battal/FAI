@@ -32,10 +32,10 @@ export const products = [
     accent: "#1f3fc3",
 
     images: [
-      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955108/FAI___NADA_1.jpg",
-      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955111/FAI___NADA_Pack.C.jpg",
-      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955106/FAI-BE-12B.jpg",
-      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955192/FAI-BE-01.jpg",
+      "https://ik.imagekit.io/j9omozvmgf/FAI%20_%20NADA%20(1).jpg",
+      "https://ik.imagekit.io/j9omozvmgf/FAI%20_%20NADA%20Pack.C.jpg",
+      "https://ik.imagekit.io/j9omozvmgf/FAI-BE-12B.jpg",
+      "https://ik.imagekit.io/j9omozvmgf/FAI-BE-01.jpg",
     ],
   },
 
@@ -68,10 +68,10 @@ export const products = [
     accent: "#1f3fc3",
 
     images: [
-      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955175/FAI___SAFAA_1.jpg",
-      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955180/FAI-BE-08B.jpg",
-      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955181/FAI___SAFAA_Pack.C.jpg",
-      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955192/FAI-BE-01.jpg",
+      "https://ik.imagekit.io/j9omozvmgf/FAI%20_%20SAFAA%20(1).jpg",
+      "https://ik.imagekit.io/j9omozvmgf/FAI-BE-08B.jpg",
+      "https://ik.imagekit.io/j9omozvmgf/FAI%20_%20SAFAA%20Pack.C.jpg",
+      "https://ik.imagekit.io/j9omozvmgf/FAI-BE-01.jpg",
     ],
   },
 
@@ -104,10 +104,10 @@ export const products = [
     accent: "#1f3fc3",
 
     images: [
-      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955154/FAI___GHASAQ_1.jpg",
-      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955160/FAI-BE-11.jpg",
-      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955163/FAI___GHASAQ_Pack.C.jpg",
-      "https://res.cloudinary.com/c9tptioy/image/upload/v1788955192/FAI-BE-01.jpg",
+      "https://ik.imagekit.io/j9omozvmgf/FAI%20_%20GHASAQ%20(1).jpg",
+      "https://ik.imagekit.io/j9omozvmgf/FAI-BE-11.jpg",
+      "https://ik.imagekit.io/j9omozvmgf/FAI%20_%20GHASAQ%20Pack.C.jpg",
+      "https://ik.imagekit.io/j9omozvmgf/FAI-BE-01.jpg",
     ],
   },
 ];
